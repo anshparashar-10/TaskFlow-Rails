@@ -18,14 +18,20 @@
 #   # For details on connection pooling, see Rails configuration guide
 #   # https://guides.rubyonrails.org/configuring.html#database-pooling
 #   max_connections: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
+# default: &default
+#   adapter: postgresql
+#   encoding: unicode
+#   pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
+#   username: postgres
+#   password: AP10
+#   host: localhost
+#   port: 5433
+
 default: &default
   adapter: postgresql
   encoding: unicode
   pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
-  username: postgres
-  password: AP10
-  host: localhost
-  port: 5433
+  url: <%= ENV['DATABASE_URL'] %>
 
 development:
   <<: *default
@@ -109,6 +115,9 @@ test:
 #     <<: *primary_production
 #     database: taskflow_api_production_cable
 #     migrations_paths: db/cable_migrate
+# production:
+#   <<: *default
+#   url: <%= ENV['DATABASE_URL'] %>
+
 production:
   <<: *default
-  url: <%= ENV['DATABASE_URL'] %>
